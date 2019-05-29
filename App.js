@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
 import Params from "./src/constants";
+import Block from "./src/components/Block";
 
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -11,6 +11,14 @@ export default class App extends Component<Props> {
         <Text style={styles.instructions}>
           {Params.getColumnsCount()} x {Params.getRowsCount()}
         </Text>
+        <Block />
+        <Block opened nearMines="1" />
+        <Block opened nearMines="2" />
+        <Block opened nearMines="3" />
+        <Block opened nearMines="4" />
+        <Block opened nearMines="5" />
+        <Block opened nearMines="6" />
+        <Block opened nearMines="7" />
       </View>
     );
   }
