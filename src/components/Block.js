@@ -1,12 +1,16 @@
-import React from "react";
-import { View, StyleSheet, Text } from "react-native";
-import { Params } from "../constants";
+import React from "react"
+import { View, StyleSheet, Text } from "react-native"
+import { Params } from "../constants"
 
 export default props => {
-  const { mined, opened, nearMines } = props;
-  const blockStyles = [styles.block];
-  if (opened) blockStyles.push(styles.opened);
-  if (blockStyles.length === 1) blockStyles.push(styles.regular);
+  let { mined, opened, nearMines, exploded, flagged } = props
+
+  opened = exploded ? true : flagged ? false : opened
+
+  const blockStyles = [styles.block]
+  if (opened) blockStyles.push(styles.opened)
+  if (exploded) blockStyles.push(styles.exploded)
+  if (blockStyles.length === 1) blockStyles.push(styles.regular)
 
   const color =
     nearMines == 1
@@ -15,18 +19,20 @@ export default props => {
       ? "#2B580F"
       : nearMines < 6
       ? "#F9060A"
-      : "#F221A9";
+      : "#F221A9"
 
   return (
     <View style={blockStyles}>
-      {!mined && opened && nearMines > 0 ? (
+      {flagged ? <Text style={styles.label}>{"🚩"}</Text> : false}
+      {opened && mined ? <Text style={styles.label}>{"💥"}</Text> : false}
+      {opened && !mined && nearMines > 0 ? (
         <Text style={[styles.label, { color }]}>{nearMines}</Text>
       ) : (
         false
       )}
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   block: {
@@ -44,5 +50,6 @@ const styles = StyleSheet.create({
     borderRightColor: "#333"
   },
   opened: { backgroundColor: "#999", borderColor: "#777" },
-  label: { fontWeight: "bold", fontSize: Params.fontSize }
-});
+  label: { fontWeight: "bold", fontSize: Params.fontSize, color: "black" },
+  exploded: { backgroundColor: "#A00", borderColor: "#A00" }
+})
