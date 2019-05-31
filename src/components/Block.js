@@ -1,16 +1,17 @@
 import React from "react"
 import { View, StyleSheet, Text } from "react-native"
-import { Params } from "../constants"
+import { Params } from "../global"
 
 export default props => {
   let { mined, opened, nearMines, exploded, flagged } = props
 
-  opened = exploded ? true : flagged ? false : opened
+  if (exploded) opened = true
 
   const blockStyles = [styles.block]
+
   if (opened) blockStyles.push(styles.opened)
-  if (exploded) blockStyles.push(styles.exploded)
-  if (blockStyles.length === 1) blockStyles.push(styles.regular)
+  else if (exploded) blockStyles.push(styles.exploded)
+  else blockStyles.push(styles.regular)
 
   const color =
     nearMines == 1
@@ -23,7 +24,7 @@ export default props => {
 
   return (
     <View style={blockStyles}>
-      {flagged ? <Text style={styles.label}>{"🚩"}</Text> : false}
+      {!opened && flagged ? <Text style={styles.label}>{"🚩"}</Text> : false}
       {opened && mined ? <Text style={styles.label}>{"💥"}</Text> : false}
       {opened && !mined && nearMines > 0 ? (
         <Text style={[styles.label, { color }]}>{nearMines}</Text>

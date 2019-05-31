@@ -1,13 +1,17 @@
 import React, { Component } from "react"
 import { Platform, StyleSheet, Text, View } from "react-native"
-import Params from "./src/constants"
-import Block from "./src/components/Block"
+//import Params from "./src/constants"
+// import Block from "./src/components/Block"
+import Board from "./src/components/Board"
+import { createField } from "./src/global"
 
 export default class App extends Component {
   render() {
+    var f = createField()
     return (
       <View style={styles.container}>
-        <Text style={styles.instructions}>
+        <Board field={f} />
+        {/* <Text style={styles.instructions}>
           {Params.getColumnsCount()} x {Params.getRowsCount()}
         </Text>
         <Block />
@@ -23,6 +27,7 @@ export default class App extends Component {
         <Block opened mined />
         <Block mined exploded />
         <Block flagged />
+        <Block flagged opened /> */}
       </View>
     )
   }
