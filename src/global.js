@@ -1,8 +1,8 @@
 import { Dimensions } from "react-native"
 
 export const Params = {
-  blockSize: 50,
-  borderSize: 4,
+  blockSize: 40,
+  borderSize: 5,
   fontSize: 24,
   headerRatio: 0.15,
   difficultLevel: 0.1,
@@ -11,8 +11,9 @@ export const Params = {
     const width = Dimensions.get("window").width
     return Math.floor(width / this.blockSize)
   },
+
   getRowsCount() {
-    const totalHeight = Dimensions.get("window").width
+    const totalHeight = Dimensions.get("window").height
     const boardHeight = totalHeight * (1 - this.headerRatio)
 
     return Math.floor(boardHeight / this.blockSize)
@@ -26,11 +27,13 @@ const createField = (
 ) => {
   let fld = Array(nRows)
     .fill(0)
-    .map(() => {
+    .map((_, row) => {
       return Array(nCols)
         .fill(0)
-        .map(() => {
+        .map((_, col) => {
           return {
+            row,
+            col,
             opened: false,
             flagged: false,
             mined: false,

@@ -1,5 +1,5 @@
 import React from "react"
-import { View, StyleSheet } from "react-native"
+import { View, StyleSheet, Text } from "react-native"
 import Block from "./Block"
 
 export default props => {
@@ -7,9 +7,20 @@ export default props => {
     const cols = row.map((col, c) => {
       return <Block {...col} key={c} />
     })
-    return <View key={r}>{cols}</View>
+    return (
+      <View key={r} style={styles.row}>
+        {cols}
+      </View>
+    )
   })
-  return <View style={styles.row}>{rows}</View>
+  return (
+    <View>
+      <View style={{ flex: 1, backgroundColor: "#cacaca" }}>
+        <Text style={{ fontSize: 40 }}>Minesweeper</Text>
+      </View>
+      {rows}
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
