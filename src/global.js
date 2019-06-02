@@ -25,7 +25,7 @@ const createField = (
   nCols = Params.getColumnsCount(),
   difficultLevel = Params.difficultLevel
 ) => {
-  let fld = Array(nRows)
+  let field = Array(nRows)
     .fill(0)
     .map((_, row) => {
       return Array(nCols)
@@ -38,21 +38,63 @@ const createField = (
             flagged: false,
             mined: false,
             exploded: false,
-            nearMines: 0
+            nearMines: 2
           }
         })
     })
+  putMines(field, nRows, nCols, difficultLevel)
+  countMinesInNeighbourhood(field)
+  return field
+}
 
+const putMines = (field, nRows, nCols, difficultLevel) => {
   let nMines = Math.floor(nRows * nCols * difficultLevel)
   while (nMines > 0) {
     const r = Math.floor(Math.random() * nRows),
       c = Math.floor(Math.random() * nCols)
-    if (!fld[r][c].mined) {
-      fld[r][c].mined = true
+    if (!field[r][c].mined) {
+      field[r][c].mined = true
       nMines--
     }
   }
-  return fld
+}
+
+const countMinesInNeighbourhood = field => {
+  for (row of field)
+    for (block of row) {
+      if (!block.mined) {
+        const neighbours = getNeighbours(block.row, block.col)
+        block.nearMines = neighbours.length
+        let cont = 0
+        for (nb of neighbours) {
+          if (field[nb[0]][nb[1]].mined) cont++
+        }
+        block.nearMines = cont
+      }
+    }
+}
+
+const getNeighbours = (i, j) => {
+  const nRows = Params.getRowsCount()
+  const nCols = Params.getColumnsCount()
+  let n = []
+
+  // Linha acima
+  if (i > 0) {
+    if (j > 0) n.push([i - 1, j - 1])
+    n.push([i - 1, j])
+    if (j < nCols - 1) n.push([i - 1, j + 1])
+  }
+  // Mesma linha
+  if (j > 0) n.push([i, j - 1])
+  if (j < nCols - 1) n.push([i, j + 1])
+  // Linha abaixo
+  if (i < nRows - 1) {
+    if (j > 0) n.push([i + 1, j - 1])
+    n.push([i + 1, j])
+    if (j < nCols - 1) n.push([i + 1, j + 1])
+  }
+  return n
 }
 
 export default Params

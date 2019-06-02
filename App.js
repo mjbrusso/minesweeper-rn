@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { Platform, StyleSheet, Text, View } from "react-native"
 //import Params from "./src/constants"
-// import Block from "./src/components/Block"
+import Block from "./src/components/Block"
 import Board from "./src/components/Board"
 import { createField } from "./src/global"
 
@@ -11,10 +11,7 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
         <Board field={f} />
-        {/* <Text style={styles.instructions}>
-          {Params.getColumnsCount()} x {Params.getRowsCount()}
-        </Text>
-        <Block />
+        {/* <Block />
         <Block mined />
         <Block opened nearMines="1" />
         <Block opened nearMines="2" />
