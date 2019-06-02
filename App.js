@@ -1,30 +1,26 @@
 import React, { Component } from "react"
-import { Platform, StyleSheet, Text, View } from "react-native"
-//import Params from "./src/constants"
+import { Platform, StyleSheet, Text, View, Alert } from "react-native"
 import Block from "./src/components/Block"
 import Board from "./src/components/Board"
-import { createField } from "./src/global"
+import { MineField } from "./src/MineField"
 
 export default class App extends Component {
+  state = {
+    mineField: new MineField()
+  }
+
   render() {
-    var f = createField()
     return (
       <View style={styles.container}>
-        <Board field={f} />
-        {/* <Block />
-        <Block mined />
-        <Block opened nearMines="1" />
-        <Block opened nearMines="2" />
-        <Block opened nearMines="3" />
-        <Block opened nearMines="4" />
-        <Block opened nearMines="5" />
-        <Block opened nearMines="6" />
-        <Block opened nearMines="7" />
-        <Block opened />
-        <Block opened mined />
-        <Block mined exploded />
-        <Block flagged />
-        <Block flagged opened /> */}
+        <Board
+          field={this.state.mineField.field}
+          onOpenField={(r, c) => {
+            if (this.state.mineField.open(r, c)) this.forceUpdate()
+          }}
+          onFlagField={(r, c) => {
+            if (this.state.mineField.putFlag(r, c)) this.forceUpdate()
+          }}
+        />
       </View>
     )
   }

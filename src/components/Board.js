@@ -5,7 +5,14 @@ import Block from "./Block"
 export default props => {
   const rows = props.field.map((row, r) => {
     const cols = row.map((col, c) => {
-      return <Block {...col} key={c} />
+      return (
+        <Block
+          {...col}
+          key={c}
+          onPress={() => props.onOpenField(r, c)}
+          onLongPress={() => props.onFlagField(r, c)}
+        />
+      )
     })
     return (
       <View key={r} style={styles.row}>

@@ -1,5 +1,5 @@
 import React from "react"
-import { View, StyleSheet, Text } from "react-native"
+import { View, StyleSheet, Text, TouchableWithoutFeedback } from "react-native"
 import { Params } from "../global"
 
 export default props => {
@@ -23,15 +23,20 @@ export default props => {
       : "#F221A9"
 
   return (
-    <View style={blockStyles}>
-      {!opened && flagged ? <Text style={styles.label}>{"🚩"}</Text> : false}
-      {opened && mined ? <Text style={styles.label}>{"💥"}</Text> : false}
-      {opened && !mined && nearMines > 0 ? (
-        <Text style={[styles.label, { color }]}>{nearMines}</Text>
-      ) : (
-        false
-      )}
-    </View>
+    <TouchableWithoutFeedback
+      onLongPress={props.onLongPress}
+      onPress={props.onPress}
+    >
+      <View style={blockStyles}>
+        {!opened && flagged ? <Text style={styles.label}>{"🚩"}</Text> : false}
+        {opened && mined ? <Text style={styles.label}>{"💥"}</Text> : false}
+        {opened && !mined && nearMines > 0 ? (
+          <Text style={[styles.label, { color }]}>{nearMines}</Text>
+        ) : (
+          false
+        )}
+      </View>
+    </TouchableWithoutFeedback>
   )
 }
 
