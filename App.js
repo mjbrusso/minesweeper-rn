@@ -1,8 +1,9 @@
 import React, { Component } from "react"
 import { Platform, StyleSheet, Text, View, Alert } from "react-native"
-import Block from "./src/components/Block"
+import Header from "./src/components/Header"
 import Board from "./src/components/Board"
 import { MineField } from "./src/MineField"
+import Params from "./src/global"
 
 export default class App extends Component {
   state = {
@@ -12,6 +13,7 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Header remainingFlags={this.state.mineField.remainingFlags} />
         <Board
           field={this.state.mineField.field}
           onOpenField={(r, c) => {
@@ -29,8 +31,7 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: "flex-end",
     backgroundColor: "#F5FCFF"
   },
   welcome: {

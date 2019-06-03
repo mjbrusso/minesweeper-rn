@@ -9,6 +9,11 @@ export class MineField {
     this.rowsCount = nRows
     this.columnCount = nCols
     this.difficultLevel = difficultLevel
+    this.minesCount = Math.floor(
+      this.rowsCount * this.columnCount * this.difficultLevel
+    )
+    this.remainingFlags = this.minesCount
+    this.exploded = false
 
     this.field = Array(nRows)
       .fill(0)
@@ -33,14 +38,20 @@ export class MineField {
 
   open(r, c) {
     const f = this.field[r][c]
-    if (f.opened) return false
+    if (f.opened || f.flagged) return false
 
     f.opened = true
+    if (f.mined) {
+      f.exploded = true
+      for (line of this.field) for (block of line) block.opened = true
+      this.exploded = true
+      return true
+    }
 
     if (!f.mined && f.nearMines == 0) {
       const neighbours = this._getNeighbours(r, c)
       for (nb of neighbours) {
-        if (!nb.opened && !nb.mined && nb.nearMines == 0)
+        if (!nb.opened && !nb.mined && !nb.flagged && nb.nearMines == 0)
           this.open(nb.row, nb.col)
       }
     }
@@ -51,14 +62,13 @@ export class MineField {
     const f = this.field[r][c]
     if (f.opened) return false
 
-    f.flagged = true
+    f.flagged = !f.flagged
+    this.remainingFlags += f.flagged ? -1 : 1
     return true
   }
 
   _putMines() {
-    let nMines = Math.floor(
-      this.rowsCount * this.columnCount * this.difficultLevel
-    )
+    let nMines = this.minesCount
     while (nMines > 0) {
       const r = Math.floor(Math.random() * this.rowsCount),
         c = Math.floor(Math.random() * this.columnCount)

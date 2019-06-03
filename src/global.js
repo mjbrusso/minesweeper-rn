@@ -7,6 +7,11 @@ export const Params = {
   headerRatio: 0.15,
   difficultLevel: 0.1,
 
+  getHeaderHeight() {
+    const h = Dimensions.get("window").height
+    return Math.floor(h * this.headerRatio)
+  },
+
   getColumnsCount() {
     const width = Dimensions.get("window").width
     return Math.floor(width / this.blockSize)

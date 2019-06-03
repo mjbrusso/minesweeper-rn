@@ -9,8 +9,8 @@ export default props => {
 
   const blockStyles = [styles.block]
 
-  if (opened) blockStyles.push(styles.opened)
-  else if (exploded) blockStyles.push(styles.exploded)
+  if (exploded) blockStyles.push(styles.exploded)
+  else if (opened) blockStyles.push(styles.opened)
   else blockStyles.push(styles.regular)
 
   const color =

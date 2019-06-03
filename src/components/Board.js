@@ -20,17 +20,11 @@ export default props => {
       </View>
     )
   })
-  return (
-    <View>
-      <View style={{ flex: 1, backgroundColor: "#cacaca" }}>
-        <Text style={{ fontSize: 40 }}>Minesweeper</Text>
-      </View>
-      {rows}
-    </View>
-  )
+  return <View style={styles.container}>{rows}</View>
 }
 
 const styles = StyleSheet.create({
+  container: { backgroundColor: "#cacaca" },
   row: {
     flexDirection: "row",
     backgroundColor: "#EEE"
