@@ -1,7 +1,7 @@
 import { Dimensions } from "react-native"
 
 export const Params = {
-  blockSize: 40,
+  blockSize: 45,
   borderSize: 5,
   fontSize: 24,
   headerRatio: 0.15,

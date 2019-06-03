@@ -23,7 +23,7 @@ export class MineField {
               flagged: false,
               mined: false,
               exploded: false,
-              nearMines: 2
+              nearMines: 0
             }
           })
       })
@@ -36,6 +36,14 @@ export class MineField {
     if (f.opened) return false
 
     f.opened = true
+
+    if (!f.mined && f.nearMines == 0) {
+      const neighbours = this._getNeighbours(r, c)
+      for (nb of neighbours) {
+        if (!nb.opened && !nb.mined && nb.nearMines == 0)
+          this.open(nb.row, nb.col)
+      }
+    }
     return true
   }
 
