@@ -13,7 +13,10 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Header remainingFlags={this.state.mineField.remainingFlags} />
+        <Header
+          remainingFlags={this.state.mineField.remainingFlags}
+          onReset={() => this.setState({ mineField: new MineField() })}
+        />
         <Board
           field={this.state.mineField.field}
           onOpenField={(r, c) => {

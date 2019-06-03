@@ -6,11 +6,11 @@ export default props => {
   return (
     <View style={styles.container}>
       <Text style={styles.counters}>{props.remainingFlags}</Text>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={props.onReset}>
         <Text style={styles.buttom}>{"🙂"}</Text>
       </TouchableOpacity>
 
-      <Text style={styles.counters}>{Params.getHeaderHeight()}</Text>
+      <Text style={styles.counters}>{"1"}</Text>
     </View>
   )
 }
@@ -27,8 +27,10 @@ const styles = StyleSheet.create({
     fontSize: 30,
     backgroundColor: "#000",
     color: "#FFF",
-    paddingHorizontal: 10,
-    fontFamily: "monospace"
+    //paddingHorizontal: 10,
+    fontFamily: "monospace",
+    width: 80,
+    textAlign: "center"
   },
   buttom: {
     fontSize: 40,
