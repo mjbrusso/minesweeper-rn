@@ -7,7 +7,7 @@ export default props => {
   return (
     <View style={styles.container}>
       <Display value={props.leftCounter} />
-      <Face onPress={props.onReset} state={props.faceState} />
+      <Face onPress={props.onReset} status={props.status} />
       <Display value={props.rightCounter} />
     </View>
   )

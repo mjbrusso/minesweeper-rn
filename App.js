@@ -3,7 +3,7 @@ import { Platform, StyleSheet, Text, View, Alert } from "react-native"
 import Header from "./src/components/Header"
 import Board from "./src/components/Board"
 import { MineField } from "./src/MineField"
-import Params from "./src/global"
+import Params, { FieldStatus } from "./src/global"
 
 export default class App extends Component {
   state = {
@@ -16,11 +16,12 @@ export default class App extends Component {
         <Header
           leftCounter={this.state.mineField.remainingFlags}
           rightCounter={this.state.mineField.remainingBlocks}
-          faceState={this.state.mineField.exploded ? "unwell" : "normal"}
+          status={this.state.mineField.status}
           onReset={() => this.setState({ mineField: new MineField() })}
         />
         <Board
           field={this.state.mineField.field}
+          status={this.state.mineField.status}
           onOpenField={(r, c) => {
             if (this.state.mineField.open(r, c)) this.forceUpdate()
           }}
@@ -38,15 +39,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-end",
     backgroundColor: "#F5FCFF"
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: "center",
-    margin: 10
-  },
-  instructions: {
-    textAlign: "center",
-    color: "#333333",
-    marginBottom: 5
   }
 })

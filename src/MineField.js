@@ -1,4 +1,4 @@
-import Params from "./global"
+import Params, { FieldStatus } from "./global"
 
 export class MineField {
   constructor(
@@ -14,8 +14,7 @@ export class MineField {
     this.remainingBlocks = this.blocksCount
 
     this.remainingFlags = this.minesCount
-    this.exploded = false
-    this.clear = false
+    this.status = FieldStatus.normal
 
     this.field = Array(nRows)
       .fill(0)
@@ -40,14 +39,26 @@ export class MineField {
 
   open(r, c) {
     const f = this.field[r][c]
-    if (f.opened || f.flagged) return false
+    if (
+      f.opened ||
+      f.flagged ||
+      this.status == FieldStatus.clear ||
+      this.status == FieldStatus.exploded
+    )
+      return false
 
     f.opened = true
     this.remainingBlocks--
+    if (this.remainingBlocks == this.minesCount) {
+      this.status = FieldStatus.clear
+      for (line of this.field) for (block of line) block.flagged = true
+      return true
+    }
+
     if (f.mined) {
       f.exploded = true
       for (line of this.field) for (block of line) block.opened = true
-      this.exploded = true
+      this.status = MineField.exploded
       return true
     }
 
@@ -62,10 +73,16 @@ export class MineField {
 
   putFlag(r, c) {
     const f = this.field[r][c]
-    if (f.opened) return false
+    if (
+      f.opened ||
+      this.status == FieldStatus.clear ||
+      this.status == FieldStatus.exploded
+    )
+      return false
 
     f.flagged = !f.flagged
     this.remainingFlags += f.flagged ? -1 : 1
+
     return true
   }
 

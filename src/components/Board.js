@@ -1,6 +1,7 @@
 import React from "react"
 import { View, StyleSheet, Text } from "react-native"
 import Block from "./Block"
+import { FieldStatus } from "../global"
 
 export default props => {
   const rows = props.field.map((row, r) => {
@@ -24,7 +25,7 @@ export default props => {
 }
 
 const styles = StyleSheet.create({
-  container: { backgroundColor: "#cacaca" },
+  container: { backgroundColor: "#cacaca", padding: 5 },
   row: {
     flexDirection: "row",
     backgroundColor: "#CACACA",
