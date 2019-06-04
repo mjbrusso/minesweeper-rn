@@ -6,9 +6,9 @@ import Display from "./Display"
 export default props => {
   return (
     <View style={styles.container}>
-      <Display value={props.remainingFlags} />
-      <Face onPress={props.onReset} state="xsmiling" />
-      <Display value={1} />
+      <Display value={props.leftCounter} />
+      <Face onPress={props.onReset} state={props.faceState} />
+      <Display value={props.rightCounter} />
     </View>
   )
 }

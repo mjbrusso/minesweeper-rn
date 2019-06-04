@@ -14,7 +14,9 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
         <Header
-          remainingFlags={this.state.mineField.remainingFlags}
+          leftCounter={this.state.mineField.remainingFlags}
+          rightCounter={this.state.mineField.remainingBlocks}
+          faceState={this.state.mineField.exploded ? "unwell" : "normal"}
           onReset={() => this.setState({ mineField: new MineField() })}
         />
         <Board
