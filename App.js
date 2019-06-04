@@ -1,9 +1,9 @@
 import React, { Component } from "react"
-import { Platform, StyleSheet, Text, View, Alert } from "react-native"
+import { StyleSheet, Text, View, Vibration } from "react-native"
 import Header from "./src/components/Header"
 import Board from "./src/components/Board"
 import { MineField } from "./src/MineField"
-import Params, { FieldStatus } from "./src/global"
+import { FieldStatus } from "./src/global"
 
 export default class App extends Component {
   state = {
@@ -23,7 +23,11 @@ export default class App extends Component {
           field={this.state.mineField.field}
           status={this.state.mineField.status}
           onOpenField={(r, c) => {
-            if (this.state.mineField.open(r, c)) this.forceUpdate()
+            if (this.state.mineField.open(r, c)) {
+              this.forceUpdate()
+              if (this.state.mineField.status != FieldStatus.normal)
+                Vibration.vibrate(300)
+            }
           }}
           onFlagField={(r, c) => {
             if (this.state.mineField.putFlag(r, c)) this.forceUpdate()
