@@ -1,11 +1,7 @@
-import Params, { FieldStatus } from "./global"
+import { FieldStatus } from "./global"
 
 export class MineField {
-  constructor(
-    nRows = Params.getRowsCount(),
-    nCols = Params.getColumnsCount(),
-    difficultLevel = Params.difficultLevel
-  ) {
+  constructor(nRows, nCols, difficultLevel) {
     this.rowsCount = nRows
     this.columnCount = nCols
     this.difficultLevel = difficultLevel
@@ -58,7 +54,7 @@ export class MineField {
     if (f.mined) {
       f.exploded = true
       for (line of this.field) for (block of line) block.opened = true
-      this.status = MineField.exploded
+      this.status = FieldStatus.exploded
       return true
     }
 

@@ -7,7 +7,7 @@ export default props => (
     <TouchableOpacity onPress={props.onPress}>
       <Text style={styles.button}>
         {props.status == FaceStatus.normal
-          ? "🙂"
+          ? "🧐"
           : props.status == FaceStatus.smiling
           ? "😄"
           : "🤕"}

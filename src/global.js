@@ -1,29 +1,34 @@
 import { Dimensions } from "react-native"
 
 export const Params = {
-  blockSize: 50,
-  borderSize: 5,
+  initialBlockSize: 65,
+  blockDecreaseStep: 5,
+  borderSize: 3,
   fontSize: 24,
   boardPadding: 5,
   headerRatio: 0.15,
-  difficultLevel: 0.1,
+  minesRatio: 0.1,
+
+  getBlockSize(level) {
+    return Params.initialBlockSize - (level - 1) * this.blockDecreaseStep
+  },
 
   getHeaderHeight() {
     const h = Dimensions.get("window").height
     return Math.floor(h * this.headerRatio)
   },
 
-  getColumnsCount() {
+  getColumnsCount(level) {
     const width = Dimensions.get("window").width - (this.boardPadding << 1)
-    return Math.floor(width / this.blockSize)
+    return Math.floor(width / this.getBlockSize(level))
   },
 
-  getRowsCount() {
+  getRowsCount(level) {
     const totalHeight =
       Dimensions.get("window").height - (this.boardPadding << 1)
     const boardHeight = totalHeight * (1 - this.headerRatio)
 
-    return Math.floor(boardHeight / this.blockSize)
+    return Math.floor(boardHeight / this.getBlockSize(level))
   }
 }
 

@@ -3,11 +3,17 @@ import { View, StyleSheet, Text, TouchableWithoutFeedback } from "react-native"
 import { Params } from "../global"
 
 export default props => {
-  let { mined, opened, nearMines, exploded, flagged } = props
+  let { mined, opened, nearMines, exploded, flagged, size } = props
 
   if (exploded) opened = true
 
-  const blockStyles = [styles.block]
+  const blockStyles = [
+    styles.block,
+    {
+      height: size,
+      width: size
+    }
+  ]
 
   if (exploded) blockStyles.push(styles.exploded)
   else if (opened) blockStyles.push(styles.opened)
@@ -42,8 +48,6 @@ export default props => {
 
 const styles = StyleSheet.create({
   block: {
-    height: Params.blockSize,
-    width: Params.blockSize,
     borderWidth: Params.borderSize,
     alignItems: "center",
     justifyContent: "center"

@@ -9,8 +9,8 @@ export default props => (
 
 const styles = StyleSheet.create({
   container: {
-    width: 80,
-    height: 50,
+    width: 95,
+    height: 65,
     backgroundColor: "#000",
     alignItems: "center",
     justifyContent: "center"

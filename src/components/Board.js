@@ -1,7 +1,6 @@
 import React from "react"
 import { View, StyleSheet, Text } from "react-native"
 import Block from "./Block"
-import { FieldStatus } from "../global"
 
 export default props => {
   const rows = props.field.map((row, r) => {
@@ -10,6 +9,7 @@ export default props => {
         <Block
           {...col}
           key={c}
+          size={props.blockSize}
           onPress={() => props.onOpenField(r, c)}
           onLongPress={() => props.onFlagField(r, c)}
         />
