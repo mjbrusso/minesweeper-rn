@@ -1,9 +1,9 @@
 import React, { Component } from "react"
-import { StyleSheet, Text, View, Vibration } from "react-native"
-import Header from "./src/components/Header"
+import { StyleSheet, Vibration, View } from "react-native"
 import Board from "./src/components/Board"
-import { MineField } from "./src/MineField"
+import Header from "./src/components/Header"
 import Params, { FieldStatus } from "./src/global"
+import { MineField } from "./src/MineField"
 
 export default class App extends Component {
   constructor(props) {
@@ -19,7 +19,7 @@ export default class App extends Component {
     return new MineField(
       Params.getRowsCount(this.state.level),
       Params.getColumnsCount(this.state.level),
-      Params.minesRatio
+      Params.getMinesRatio(this.state.level)
     )
   }
 
@@ -27,8 +27,12 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
         <Header
-          leftCounter={"🚩" + this.state.mineField.remainingFlags}
-          rightCounter={"🎚️" + this.state.level}
+          leftCounter={"🚩" + this.state.mineField.minesRatio}
+          rightCounter={
+            this.state.level +
+            "🎚️" +
+            Number.parseInt(Params.getBlockSize(this.state.level))
+          }
           status={this.state.mineField.status}
           onClickFace={() => {
             if (this.state.mineField.status == FieldStatus.clear)

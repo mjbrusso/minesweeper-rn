@@ -1,14 +1,12 @@
 import { FieldStatus } from "./global"
 
 export class MineField {
-  constructor(nRows, nCols, difficultLevel) {
+  constructor(nRows, nCols, minesRatio) {
     this.rowsCount = nRows
     this.columnCount = nCols
-    this.difficultLevel = difficultLevel
-    this.blocksCount = this.rowsCount * this.columnCount
-    this.minesCount = Math.floor(this.blocksCount * this.difficultLevel)
-    this.remainingBlocks = this.blocksCount
-
+    this.minesRatio = minesRatio
+    this.remainingBlocks = this.rowsCount * this.columnCount
+    this.minesCount = Math.floor(this.remainingBlocks * this.minesRatio)
     this.remainingFlags = this.minesCount
     this.status = FieldStatus.normal
 
@@ -44,17 +42,18 @@ export class MineField {
       return false
 
     f.opened = true
-    this.remainingBlocks--
-    if (this.remainingBlocks == this.minesCount) {
-      this.status = FieldStatus.clear
-      for (line of this.field) for (block of line) block.flagged = true
-      return true
-    }
-
     if (f.mined) {
       f.exploded = true
       for (line of this.field) for (block of line) block.opened = true
       this.status = FieldStatus.exploded
+      return true
+    }
+
+    this.remainingBlocks--
+    if (this.remainingBlocks == this.minesCount) {
+      this.status = FieldStatus.clear
+      for (line of this.field) for (block of line) block.flagged = true
+      this.remainingFlags = 0
       return true
     }
 

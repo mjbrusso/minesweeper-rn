@@ -1,5 +1,5 @@
 import React from "react"
-import { View, StyleSheet, Text, TouchableWithoutFeedback } from "react-native"
+import { StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native"
 import { Params } from "../global"
 
 export default props => {

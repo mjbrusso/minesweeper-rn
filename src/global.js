@@ -7,10 +7,15 @@ export const Params = {
   fontSize: 24,
   boardPadding: 5,
   headerRatio: 0.15,
-  minesRatio: 0.1,
+  minesRatioOptions: [0.01, 0.015, 0.02],
+
+  getMinesRatio(level) {
+    return this.minesRatioOptions[level % this.minesRatioOptions.length]
+  },
 
   getBlockSize(level) {
-    return Params.initialBlockSize - (level - 1) * this.blockDecreaseStep
+    level = Number.parseInt((level - 1) / this.minesRatioOptions.length)
+    return Params.initialBlockSize - level * this.blockDecreaseStep
   },
 
   getHeaderHeight() {

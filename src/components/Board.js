@@ -1,5 +1,5 @@
 import React from "react"
-import { View, StyleSheet, Text } from "react-native"
+import { StyleSheet, View } from "react-native"
 import Block from "./Block"
 
 export default props => {
